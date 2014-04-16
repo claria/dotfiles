@@ -1,0 +1,17 @@
+[user]
+	email = g.sieber@gmail.com
+	name = Georg Sieber
+[color]
+	ui = true
+	branch = true
+	diff = true
+	status = true
+	interactive = true
+[merge]
+	tool = meld
+[diff]
+	tool = meld
+[push]
+	default = simple
+[core]
+	autocrlf = input
