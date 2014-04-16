@@ -13,7 +13,7 @@ colors
 
 # Source scripts in $HOME/.zsh/
 if [ -d $HOME/.zsh ]; then
-    for f in $HOME/.zsh/*; do
+    for f in $HOME/.zsh/*.zsh; do
         . "$f"
     done
     unset f
