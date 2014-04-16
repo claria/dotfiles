@@ -126,8 +126,12 @@ set lazyredraw
 " Syntax highlighting aktivieren
 syntax on
 
-set undodir=~/.vim/backups      " keep undo history accross sessions
-set undofile
+if v:version > 702
+    set undofile
+    set undodir=~/.vim/undo      " keep undo history accross sessions
+    set undolevels=1000
+    set undoreload=10000
+endif
 
 " Useful mappings for managing tabs
 nnoremap t0  :tabfirst<CR>
@@ -165,8 +169,10 @@ set nowrap "Wrap lines
 ":autocmd BufReadPost * :DetectIndent
 " set tw=79
 "set textwidth=80
-:set colorcolumn=80,81
-hi ColorColumn guibg=gray25 ctermbg=8
+if exists('+colorcolumn')
+    set colorcolumn=80,81
+    hi ColorColumn guibg=gray25 ctermbg=8
+endif
 
 "Replace selected text with <C-r>
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
