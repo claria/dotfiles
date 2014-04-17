@@ -48,10 +48,14 @@ function zle-line-init zle-keymap-select () {
     RPS1="${${KEYMAP/vicmd/[NORMAL]}/(main|viins)/[INSERT]}"
     RPS2=$RPS1
     zle reset-prompt
-    echoti smkx
+    if [[ ${+terminfo[smkx]} -ne 0 ]]; then
+        echoti smkx
+    fi
 }
 function zle-line-finish () {
-    echoti rmkx
+    if [[ ${+terminfo[rmkx]} -ne 0 ]]; then
+        echoti rmkx
+    fi
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
