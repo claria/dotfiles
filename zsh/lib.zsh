@@ -35,7 +35,9 @@ parse_git_dirty() {
   fi
 }
 
-function ppgrep() { pgrep "$@" | xargs ps fp; }
+function ppgrep() { 
+  pgrep "$@" | xargs ps fp; 
+}
 
 function cleansvn() {
 svn status --no-ignore | grep '^[?I]' |  sed "s/^[?I] //" | xargs -I{} rm -rf "{}"
