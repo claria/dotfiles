@@ -159,6 +159,9 @@ set shiftwidth=4
 set tabstop=4
 set expandtab
 
+" Disable smartindent when coding python
+au! FileType python setl nosmartindent
+
 " Linebreak on 500 characters
 set lbr
 set tw=500
