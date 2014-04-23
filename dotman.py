@@ -6,34 +6,41 @@ import argparse
 import glob
 import logging
 import subprocess
+import shutil
 
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 log = logging.getLogger(__name__)
 
 def main():
 
     parser = argparse.ArgumentParser(description='Handle dotfiles.')
-    parser.add_argument('--dotfiles_dir',
+    subparsers = parser.add_subparsers()
+
+    glob_parser = argparse.ArgumentParser(add_help=False)
+    glob_parser.add_argument('--dotfiles_dir',
                         default=os.path.join(os.getenv('HOME'), '.dotfiles'),
                         help='Directory in which dotfiles are located.')
 
-    subparsers = parser.add_subparsers()
 
-    parser_install = subparsers.add_parser('install')
+    parser_install = subparsers.add_parser('install', help='Install or update symlinks.',
+                                           parents=[glob_parser])
     parser_install.set_defaults(func=install_symlinks)
     parser_install.add_argument('--force_install', '-f', action='store_true',
                                 help='Overwrite existing config files')
 
-
-    parser_uninstall = subparsers.add_parser('uninstall')
+    parser_uninstall = subparsers.add_parser('uninstall', parents=[glob_parser])
     parser_uninstall.set_defaults(func=uninstall_symlinks)
 
-    parser_update = subparsers.add_parser('update')
-    parser_update.set_defaults(func=update_symlinks)
+    parser_add = subparsers.add_parser('add', parents=[glob_parser])
+    parser_add.set_defaults(func=add_files)
+    parser_add.add_argument('files', nargs='*', help='Add files to dotfiles repo.')
+
+    parser_remove = subparsers.add_parser('remove', parents=[glob_parser])
+    parser_remove.set_defaults(func=remove_files)
+    parser_remove.add_argument('files', nargs='*', help='Remove files from dotfiles repo.')
 
     log.debug('Parsing Args')
     clargs = vars(parser.parse_args())
-
     clargs['func'](**clargs)
 
 
@@ -72,13 +79,46 @@ def uninstall_symlinks():
     log.info('Uninstalling symlinks')
     pass
 
-def update_symlinks():
+def add_files(**kwargs):
+
+    files = kwargs['files']
+    for filename in files:
+        path = os.path.abspath(filename)
+        relpath = os.path.relpath(path, os.getenv('HOME'))
+        # Dotfile path without leading dot
+        dotfilepath = os.path.join(kwargs['dotfiles_dir'], relpath.lstrip('.'))
+
+        # Path must be in home
+        if not os.getenv('HOME') in path:
+            log.warning('Only files in home folder can be handled.')
+            continue
+
+        # relative path must start with dot
+        if not relpath.startswith('.'):
+            log.warning('File is not a dotfile.')
+            continue
+
+        if os.path.exists(os.path.join(kwargs['dotfiles_dir'], relpath)):
+            log.warning('File already in dotfiles directory')
+            continue
+        log.info('Moving file {} to {}.'.format(path, dotfilepath))
+        # Create directory structure if neccesary
+        directory = os.path.dirname(dotfilepath)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        shutil.move(path, dotfilepath)
+
+def remove_files(**kwargs):
+    # remove symlink in HOME
+    # mv file to HOME
     pass
 
-
 def istracked(gitrepo, filename):
+    """ Returns True if file is tracked within gitrepo.
+    """
     gitrepodir = os.path.join(gitrepo, '.git')
     cmd = 'git --git-dir {} ls-files --error-unmatch {}'.format(gitrepodir, filename)
+    print cmd
     rc = subprocess.call(cmd.split())
     return False if rc else True
 
