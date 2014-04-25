@@ -7,3 +7,5 @@ alias rm='rm -I'
 alias ls='ls --color=auto'
 alias ll='ls -l'
 
+
+alias root='root -l'
