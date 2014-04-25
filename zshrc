@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+PATH=$HOME/bin:$PATH
+
 #completion
 autoload -U compinit
 compinit

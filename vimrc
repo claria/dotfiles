@@ -102,7 +102,7 @@ set showcmd
 
 " Show Tabs and trailing spaces
 ":set listchars=tab:>-,trail:~,extends:>,precedes:<
-set listchars=tab:▸\ ,trail:·
+set listchars=trail:·,precedes:«,extends:»,tab:▸-
 :set list
 map <silent> <leader>s :set nolist!<CR>
 
