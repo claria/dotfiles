@@ -9,16 +9,16 @@ bindkey '^[[1;5C' forward-word                        # [Ctrl-RightArrow] - move
 bindkey '^[[1;5D' backward-word                       # [Ctrl-LeftArrow] - move backward one word
 
 if [[ "${terminfo[kcbt]}" != "" ]]; then
-  bindkey "${terminfo[kcbt]}" reverse-menu-complete   # [Shift-Tab] - move through the completion menu backwards
+    bindkey "${terminfo[kcbt]}" reverse-menu-complete   # [Shift-Tab] - move through the completion menu backwards
 fi
 
 bindkey '^?' backward-delete-char                     # [Backspace] - delete backward
 if [[ "${terminfo[kdch1]}" != "" ]]; then
-  bindkey "${terminfo[kdch1]}" delete-char            # [Delete] - delete forward
+    bindkey "${terminfo[kdch1]}" delete-char            # [Delete] - delete forward
 else
-  bindkey "^[[3~" delete-char
-  bindkey "^[3;5~" delete-char
-  bindkey "\e[3~" delete-char
+    bindkey "^[[3~" delete-char
+    bindkey "^[3;5~" delete-char
+    bindkey "\e[3~" delete-char
 fi
 
 key[Home]=${terminfo[khome]}
@@ -45,17 +45,17 @@ key[PageDown]=${terminfo[knp]}
 # Finally, make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
 function zle-line-init zle-keymap-select () {
-    RPS1="${${KEYMAP/vicmd/[NORMAL]}/(main|viins)/[INSERT]}"
-    RPS2=$RPS1
-    zle reset-prompt
-    if [[ ${+terminfo[smkx]} -ne 0 ]]; then
-        echoti smkx
-    fi
+RPS1="${${KEYMAP/vicmd/[NORMAL]}/(main|viins)/[INSERT]}"
+RPS2=$RPS1
+zle reset-prompt
+if [[ ${+terminfo[smkx]} -ne 0 ]]; then
+    echoti smkx
+fi
 }
 function zle-line-finish () {
-    if [[ ${+terminfo[rmkx]} -ne 0 ]]; then
-        echoti rmkx
-    fi
+if [[ ${+terminfo[rmkx]} -ne 0 ]]; then
+    echoti rmkx
+fi
 }
 zle -N zle-line-init
 zle -N zle-keymap-select

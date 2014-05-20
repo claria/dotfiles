@@ -1,4 +1,7 @@
-#Aliases
+#
+# Aliases
+#
+
 alias nano='nano -w'
 alias hist='history | grep $1'
 alias df='df -h'
@@ -9,3 +12,4 @@ alias ll='ls -l'
 
 
 alias root='root -l'
+alias zshrun='urxvt -geometry 80x3 -name bashrun -e sh -c "/bin/bash -i -t"'
