@@ -66,6 +66,7 @@ bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
 bindsym $mod+o move container to output right
+bindsym $mod+Shift+o move workspace to output right
 
 
 # alternatively, you can use the cursor keys:

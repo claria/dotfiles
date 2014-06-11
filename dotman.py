@@ -8,7 +8,8 @@ import subprocess
 import shutil
 import fnmatch
 
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+# Initialize Logging
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 log = logging.getLogger(__name__)
 
 
@@ -35,7 +36,7 @@ def main():
     parser_uninstall = subparsers.add_parser('uninstall', parents=[glob_parser])
     parser_uninstall.set_defaults(func=uninstall_symlinks)
 
-    # Add additonal files
+    # Add additional files
     parser_add = subparsers.add_parser('add', parents=[glob_parser])
     parser_add.set_defaults(func=add_files)
     parser_add.add_argument('files', nargs='*', help='Add files to dotfiles repo.')
@@ -79,12 +80,12 @@ def install_symlinks(**kwargs):
             os.remove(linkname)
         # Check if real path exists.
         if os.path.exists(linkname):
-            log.info('File {} exists.'.format(linkname))
+            log.debug('File {} exists.'.format(linkname))
             if kwargs['force_install']:
                 log.warning('Removing file {}.'.format(linkname))
                 os.remove(linkname)
             else:
-                log.info('Skipping file {}.'.format(linkname))
+                log.debug('Skipping file {}.'.format(linkname))
                 continue
 
         log.debug('Symlinking {} to {}'.format(linkname, filepath))
@@ -96,8 +97,8 @@ def install_symlinks(**kwargs):
 
 def uninstall_symlinks():
     log.info('Uninstalling symlinks')
-    pass
-
+    log.error('Not implemented.')
+    raise NotImplementedError
 
 def add_files(**kwargs):
 
