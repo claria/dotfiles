@@ -72,22 +72,22 @@ def install_symlinks(**kwargs):
     # Symlink each file
     for filepath in dotfiles:
         relpath = os.path.relpath(filepath, dotfiles_dir)
-        linkname = os.path.join(os.getenv('HOME'), '.{}'.format(relpath))
+        linkname = os.path.join(os.getenv('HOME'), '.{0}'.format(relpath))
         # Check and remove broken symlinks
         print linkname
         if os.path.islink(linkname) and not os.path.exists(os.readlink(linkname)):
             os.remove(linkname)
         # Check if real path exists.
         if os.path.exists(linkname):
-            log.info('File {} exists.'.format(linkname))
+            log.info('File {0} exists.'.format(linkname))
             if kwargs['force_install']:
-                log.warning('Removing file {}.'.format(linkname))
+                log.warning('Removing file {0}.'.format(linkname))
                 os.remove(linkname)
             else:
-                log.info('Skipping file {}.'.format(linkname))
+                log.info('Skipping file {0}.'.format(linkname))
                 continue
 
-        log.debug('Symlinking {} to {}'.format(linkname, filepath))
+        log.debug('Symlinking {0} to {1}'.format(linkname, filepath))
         directory = os.path.dirname(linkname)
         if not os.path.exists(directory):
             os.makedirs(directory)
@@ -121,7 +121,7 @@ def add_files(**kwargs):
         if os.path.exists(os.path.join(kwargs['dotfiles_dir'], relpath)):
             log.warning('File already in dotfiles directory')
             continue
-        log.info('Moving file {} to {}.'.format(path, dotfilepath))
+        log.info('Moving file {0} to {1}.'.format(path, dotfilepath))
         # Create directory structure if neccesary
         directory = os.path.dirname(dotfilepath)
         if not os.path.exists(directory):
@@ -139,7 +139,7 @@ def istracked(gitrepo, filename):
     """ Returns True if file is tracked within gitrepo.
     """
     gitrepodir = os.path.join(gitrepo, '.git')
-    cmd = 'git --git-dir {} ls-files --error-unmatch {}'.format(gitrepodir, filename)
+    cmd = 'git --git-dir {0} ls-files --error-unmatch {0}'.format(gitrepodir, filename)
     print cmd
     rc = subprocess.call(cmd.split())
     return False if rc else True
