@@ -5,24 +5,34 @@ set nocompatible
 set backspace=indent,eol,start
 " Colorscheme
 "
-set background=dark
-colorscheme desert
+"
 
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+if filereadable("/home/aem/.vim/bundle/vundle/autoload/vundle.vim")
+    set rtp+=~/.vim/bundle/vundle/
+    call vundle#rc()
 
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'scrooloose/nerdtree'
+    " let Vundle manage Vundle
+    " required! 
+    Bundle 'gmarik/vundle'
+    Bundle 'Valloric/YouCompleteMe'
+    Bundle 'tomtom/tcomment_vim'
+    Bundle 'scrooloose/nerdtree'
+    Bundle 'godlygeek/tabular'
+    Bundle 'altercation/vim-colors-solarized'
+endif
 
-autocmd vimenter * if !argc() | NERDTree | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" autocmd vimenter * if !argc() | NERDTree | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
+" Syntax highlighting aktivieren
+syntax on
+set background=dark
+colorscheme solarized
+
+
+" YouCompleteMe Autocompleter
 let g:ycm_global_ycm_extra_conf = '/home/aem/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 nmap <leader>gh :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -34,6 +44,14 @@ if has("gui_running")
     set t_Co=256
     set guitablabel=%M\ %t
 endif
+
+
+" Vim Latex Suite
+let g:Tex_GotoError=0
+let g:Tex_ShowErrorContext=0
+let g:Tex_DefaultTargetFormat='pdf'
+let g:Tex_CompileRule_pdf='pdflatex -interaction=nonstopmode $*'
+let g:tex_flavor='latex'
 
 " Use X Clipboard
 set clipboard=unnamed
@@ -124,9 +142,6 @@ set incsearch
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
 
-" Syntax highlighting aktivieren
-syntax on
-
 if v:version > 702
     set undofile
     set undodir=~/.vim/undo      " keep undo history accross sessions
@@ -144,6 +159,11 @@ nnoremap tn  :tabnew<CR>
 nnoremap tm  :tabmove<Space>
 nnoremap tq  :tabclose<CR>
 
+" Folding
+set foldlevelstart=20
+let Tex_FoldedSections=""
+let Tex_FoldedEnvironments=""
+let Tex_FoldedMisc=""
 
 " Swap items in comma spearated lists to the left and right
 nnoremap <silent> gl "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><c-o>/\w\+\_W\+<CR><c-l>

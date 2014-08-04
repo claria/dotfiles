@@ -7,6 +7,7 @@ import logging
 import subprocess
 import shutil
 import fnmatch
+import socket
 
 # Initialize Logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
@@ -63,9 +64,15 @@ def install_symlinks(**kwargs):
     for root, dirnames, filenames in os.walk(dotfiles_dir):
         if '.git' in root:
             continue
+        if 'host_' in os.path.basename(root):
+            if os.path.basename(root) == 'host_' + socket.gethostname():
+                raise NotImplementedError
+                continue
+            else:
+                continue
         for filename in filenames:
             # Remove dotman from list
-            if os.path.realpath(__file__) == filename:
+            if os.path.basename(__file__) == filename:
                 continue
             path = os.path.join(root, filename)
             dotfiles.append(path)
