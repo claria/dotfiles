@@ -14,7 +14,9 @@ status.register("clock",
 
 # Shows the average load of the last minute and the last 5 minutes
 # (the default value for format is used)
-status.register("load")
+status.register("load",
+        critical_limit=4.,
+        critical_color="#FFFFFF")
 
 # Shows your CPU temperature, if you have a Intel CPU
 # status.register("temp",
@@ -48,7 +50,9 @@ status.register("battery",
 # Note: the network module requires PyPI package netifaces-py3
 status.register("network",
     interface="eth0",
-    format_up="{v4cidr}",)
+    format_up="{v4cidr}",
+    color_down="#FFFFFF",
+    color_up="#FFFFFF")
 
 # Has all the options of the normal network and adds some wireless specific things
 # like quality and network names.
@@ -56,7 +60,9 @@ status.register("network",
 # Note: requires both netifaces-py3 and basiciw
 status.register("wireless",
     interface="wlan0",
-    format_up="{essid}",)
+    format_up="{essid}",
+    color_down="#FFFFFF",
+    color_up="#FFFFFF")
 
 # Shows disk usage of /
 # Format:
