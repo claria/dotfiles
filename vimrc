@@ -9,14 +9,16 @@ set backspace=indent,eol,start
 
 filetype off
 
-if filereadable("/home/aem/.vim/bundle/vundle/autoload/vundle.vim")
+if filereadable($HOME . "/.vim/bundle/vundle/autoload/vundle.vim")
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
 
     " let Vundle manage Vundle
     " required! 
     Bundle 'gmarik/vundle'
-    Bundle 'Valloric/YouCompleteMe'
+    if v:version > 703
+        Bundle 'Valloric/YouCompleteMe'
+    endif
     Bundle 'tomtom/tcomment_vim'
     Bundle 'scrooloose/nerdtree'
     Bundle 'godlygeek/tabular'
