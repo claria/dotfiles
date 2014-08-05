@@ -73,15 +73,22 @@ def install_symlinks(**kwargs):
     # Symlink each file
     for filepath in dotfiles:
         linkname = get_homefolder_path(filepath, dotfiles_dir)
-        # Check and remove broken symlinks
         log.debug('Try to link {0} against target {1}'.format(linkname, filepath))
+
+        # Check and remove broken symlinks
         if os.path.islink(linkname) and not os.path.exists(os.readlink(linkname)):
             os.remove(linkname)
+
+        # Check if link is a valid link to dotfile
+        if is_valid_link(filepath, dotfiles_dir):
+            log.debug('Nothing to do for dotfile {0}'.format(filepath))
+            continue
+ 
         # Check if real path exists.
-        if os.path.exists(linkname):
-            log.debug('File {0} exists.'.format(linkname))
+        if os.path.exists(linkname) and (not os.path.islink(linkname)):
+            log.debug('File {0} already exists.'.format(linkname))
             if kwargs['force_install']:
-                log.warning('Removing file {0}.'.format(linkname))
+                log.warning('Overwriting file {0}.'.format(linkname))
                 os.remove(linkname)
             #Check if files are equal, if yes just replace
             elif (hashfile(linkname) == hashfile(filepath)):
@@ -92,15 +99,14 @@ def install_symlinks(**kwargs):
                 log.debug('Skipping file {0}.'.format(linkname))
                 continue
 
-        if is_valid_link(filepath, dotfiles_dir):
-            log.debug('Nothing to do for dotfile {0}'.format(filepath))
-            continue
-        else:
-            log.debug('Symlinking {0} to {1}'.format(linkname, filepath))
-            directory = os.path.dirname(linkname)
-            if not os.path.exists(directory):
-                os.makedirs(directory)
-            os.symlink(filepath, linkname)
+        
+        log.debug('Symlinking {0} to {1}'.format(linkname, filepath))
+        directory = os.path.dirname(linkname)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        print filepath
+        print linkname
+        # os.symlink(filepath, linkname)
 
 
 def uninstall_symlinks():
