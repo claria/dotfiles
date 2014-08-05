@@ -8,9 +8,10 @@ import subprocess
 import shutil
 import fnmatch
 import socket
+import hashlib
 
 # Initialize Logging
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 log = logging.getLogger(__name__)
 
 
@@ -25,6 +26,12 @@ def main():
     glob_parser.add_argument('--dotfiles_dir',
                              default=os.path.join(os.getenv('HOME'), '.dotfiles'),
                              help='Directory in which dotfiles are located.')
+
+    # Status
+    parser_status = subparsers.add_parser('status', help='Show status of all dotfiles',
+                                           parents=[glob_parser])
+    parser_status.set_defaults(func=print_status)
+ 
 
     # Install/symlink dotfiles
     parser_install = subparsers.add_parser('install', help='Install or update symlinks.',
@@ -60,29 +67,14 @@ def install_symlinks(**kwargs):
 
     # Only real files are symlinked no folders
     # but the directory structure is preserved
-    dotfiles = []
-    for root, dirnames, filenames in os.walk(dotfiles_dir):
-        if '.git' in root:
-            continue
-        if 'host_' in os.path.basename(root):
-            if os.path.basename(root) == 'host_' + socket.gethostname():
-                raise NotImplementedError
-                continue
-            else:
-                continue
-        for filename in filenames:
-            # Remove dotman from list
-            if os.path.basename(__file__) == filename:
-                continue
-            path = os.path.join(root, filename)
-            dotfiles.append(path)
+    dotfiles = get_all_dotfiles(dotfiles_dir)
+
 
     # Symlink each file
     for filepath in dotfiles:
-        relpath = os.path.relpath(filepath, dotfiles_dir)
-        linkname = os.path.join(os.getenv('HOME'), '.{0}'.format(relpath))
+        linkname = get_homefolder_path(filepath, dotfiles_dir)
         # Check and remove broken symlinks
-        print linkname
+        log.debug('Try to link {0} against target {1}'.format(linkname, filepath))
         if os.path.islink(linkname) and not os.path.exists(os.readlink(linkname)):
             os.remove(linkname)
         # Check if real path exists.
@@ -91,15 +83,24 @@ def install_symlinks(**kwargs):
             if kwargs['force_install']:
                 log.warning('Removing file {0}.'.format(linkname))
                 os.remove(linkname)
+            #Check if files are equal, if yes just replace
+            elif (hashfile(linkname) == hashfile(filepath)):
+                log.debug('Home folder file and dotfile are identical')
+                log.debug('Replacing home folder file with symlink to dotfile')
+                os.remove(linkname)
             else:
                 log.debug('Skipping file {0}.'.format(linkname))
                 continue
 
-        log.debug('Symlinking {0} to {1}'.format(linkname, filepath))
-        directory = os.path.dirname(linkname)
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-        os.symlink(filepath, linkname)
+        if is_valid_link(filepath, dotfiles_dir):
+            log.debug('Nothing to do for dotfile {0}'.format(filepath))
+            continue
+        else:
+            log.debug('Symlinking {0} to {1}'.format(linkname, filepath))
+            directory = os.path.dirname(linkname)
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+            os.symlink(filepath, linkname)
 
 
 def uninstall_symlinks():
@@ -136,11 +137,72 @@ def add_files(**kwargs):
             os.makedirs(directory)
         shutil.move(path, dotfilepath)
 
+def print_status(**kwargs):
+
+    dotfiles_dir = kwargs['dotfiles_dir']
+    print 'Status of all dotfiles:'
+    dotfiles = get_all_dotfiles(dotfiles_dir)
+
+    for dotfile in dotfiles:
+        print "{}:".format(get_rel_path(dotfile, dotfiles_dir))
+        print "  Dotpath:   {}".format(dotfile)
+        print "  Homepath:  {}".format(get_homefolder_path(dotfile, dotfiles_dir))
+        print "  Symlinked: {}".format(is_valid_link(dotfile, dotfiles_dir))
+
+
+
 
 def remove_files(**kwargs):
     # remove symlink in HOME
     # mv file to HOME
     pass
+
+####################
+# Helper functions #
+####################
+
+def get_all_dotfiles(dotfiles_dir):
+    dotfiles = []
+    for root, dirnames, filenames in os.walk(dotfiles_dir):
+        if '.git' in root:
+            continue
+        if 'host_' in os.path.basename(root):
+            if os.path.basename(root) == 'host_' + socket.gethostname():
+                raise NotImplementedError
+                continue
+            else:
+                continue
+        for filename in filenames:
+            # Remove dotman from list
+            if os.path.basename(__file__) == filename:
+                continue
+            if filename.startswith('.'):
+                continue
+            path = os.path.join(root, filename)
+            dotfiles.append(path)
+
+    return dotfiles
+
+def get_homefolder_path(filepath, dotfiles_dir):
+    relpath = get_rel_path(filepath, dotfiles_dir)
+    linkname = os.path.join(os.getenv('HOME'), '.{0}'.format(relpath))
+    return linkname
+
+
+def get_rel_path(filepath, dotfiles_dir):
+    relpath = os.path.relpath(filepath, dotfiles_dir)
+    return relpath
+
+def is_valid_link(dotfile, dotfiles_dir):
+
+    homefolder_path = get_homefolder_path(dotfile, dotfiles_dir)
+    if os.path.islink( homefolder_path):
+        if (os.path.realpath(homefolder_path) == dotfile):
+            return True
+        else: 
+            return False
+    else:
+        return False
 
 
 def istracked(gitrepo, filename):
@@ -151,6 +213,18 @@ def istracked(gitrepo, filename):
     print cmd
     rc = subprocess.call(cmd.split())
     return False if rc else True
+
+
+def hashfile(fname, blocksize=65536):
+    """ Return sha256 hash of file"""
+    afile = open(fname, 'rb')
+    hasher = hashlib.sha256()
+    buf = afile.read(blocksize)
+    while len(buf) > 0:
+        hasher.update(buf)
+        buf = afile.read(blocksize)
+    return hasher.hexdigest()
+
 
 if __name__ == '__main__':
     main()
