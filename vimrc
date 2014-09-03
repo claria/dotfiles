@@ -9,20 +9,23 @@ set backspace=indent,eol,start
 
 filetype off
 
-if filereadable($HOME . "/.vim/bundle/vundle/autoload/vundle.vim")
-    set rtp+=~/.vim/bundle/vundle/
-    call vundle#rc()
+if filereadable($HOME . "/.vim/bundle/Vundle.vim/autoload/vundle.vim")
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
 
     " let Vundle manage Vundle
     " required! 
-    Bundle 'gmarik/vundle'
+    Plugin 'gmarik/vundle'
     if v:version > 703
-        Bundle 'Valloric/YouCompleteMe'
+        Plugin 'Valloric/YouCompleteMe'
     endif
-    Bundle 'tomtom/tcomment_vim'
-    Bundle 'scrooloose/nerdtree'
-    Bundle 'godlygeek/tabular'
-    Bundle 'altercation/vim-colors-solarized'
+    Plugin 'tomtom/tcomment_vim'
+    Plugin 'scrooloose/nerdtree'
+    Plugin 'godlygeek/tabular'
+    Plugin 'altercation/vim-colors-solarized'
+    Plugin 'tpope/vim-fugitive'
+    Plugin 'airblade/vim-gitgutter'
+    call vundle#end() 
 endif
 
 " autocmd vimenter * if !argc() | NERDTree | endif
