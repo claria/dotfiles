@@ -13,3 +13,12 @@ alias ll='ls -l'
 
 alias root='root -l'
 alias zshrun='urxvt -geometry 80x3 -name bashrun -e sh -c "/bin/bash -i -t"'
+
+# changing directories
+alias ..='cd ..'
+alias cd..='cd ..'
+alias cd...='cd ../..'
+alias cd....='cd ../../..'
+alias cd.....='cd ../../../..'
+alias cd/='cd /'
+

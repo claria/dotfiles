@@ -47,3 +47,21 @@ pgrep "$@" | xargs ps fp;
 function cleansvn() {
 svn status --no-ignore | grep '^[?I]' |  sed "s/^[?I] //" | xargs -I{} rm -rf "{}"
 }
+
+#changing directories
+cd () {
+  if   [[ "x$*" == "x..." ]]; then
+    cd ../..
+  elif [[ "x$*" == "x...." ]]; then
+    cd ../../..
+  elif [[ "x$*" == "x....." ]]; then
+    cd ../../../..
+  elif [[ "x$*" == "x......" ]]; then
+    cd ../../../../..
+  elif [ -d ~/.autoenv ]; then
+    source ~/.autoenv/activate.sh
+    autoenv_cd "$@"
+  else
+    builtin cd "$@"
+  fi
+}
