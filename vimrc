@@ -16,7 +16,7 @@ if filereadable($HOME . "/.vim/bundle/Vundle.vim/autoload/vundle.vim")
     " let Vundle manage Vundle
     " required! 
     Plugin 'gmarik/vundle'
-    if v:version > 703
+    if v:version > 703 && has('python')
         Plugin 'Valloric/YouCompleteMe'
     endif
     Plugin 'tomtom/tcomment_vim'
