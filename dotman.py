@@ -75,38 +75,42 @@ def install_symlinks(**kwargs):
         linkname = get_homefolder_path(filepath, dotfiles_dir)
         log.debug('Try to link {0} against target {1}'.format(linkname, filepath))
 
-        # Check and remove broken symlinks
-        if os.path.islink(linkname) and not os.path.exists(os.readlink(linkname)):
-            os.remove(linkname)
-
         # Check if link is a valid link to dotfile
         if is_valid_link(filepath, dotfiles_dir):
             log.debug('Nothing to do for dotfile {0}'.format(filepath))
             continue
- 
+        # Check and remove broken symlinks
+        if os.path.islink(linkname) and not os.path.exists(os.readlink(linkname)):
+            log.debug('{0} is an invalid link. Will be removed.'.format(linkname))
+            os.unlink(linkname)
+
+
         # Check if real path exists.
         if os.path.exists(linkname) and (not os.path.islink(linkname)):
             log.debug('File {0} already exists.'.format(linkname))
             if kwargs['force_install']:
                 log.warning('Overwriting file {0}.'.format(linkname))
                 os.remove(linkname)
+                print "tut"
             #Check if files are equal, if yes just replace
             elif (hashfile(linkname) == hashfile(filepath)):
                 log.debug('Home folder file and dotfile are identical')
                 log.debug('Replacing home folder file with symlink to dotfile')
+                print "linkname", linkname
                 os.remove(linkname)
             else:
                 log.debug('Skipping file {0}.'.format(linkname))
                 continue
 
-        
+
         log.debug('Symlinking {0} to {1}'.format(linkname, filepath))
         directory = os.path.dirname(linkname)
         if not os.path.exists(directory):
             os.makedirs(directory)
-        print filepath
-        print linkname
-        # os.symlink(filepath, linkname)
+        if not os.path.exists(linkname):
+            os.symlink(filepath, linkname)
+        else:
+            log.warning('Cannot create symlink. File {0} exists.'.format(linkname))
 
 
 def uninstall_symlinks():
@@ -223,13 +227,13 @@ def istracked(gitrepo, filename):
 
 def hashfile(fname, blocksize=65536):
     """ Return sha256 hash of file"""
-    afile = open(fname, 'rb')
-    hasher = hashlib.sha256()
-    buf = afile.read(blocksize)
-    while len(buf) > 0:
-        hasher.update(buf)
+    with open(fname, 'rb') as afile:
+        hasher = hashlib.sha256()
         buf = afile.read(blocksize)
-    return hasher.hexdigest()
+        while len(buf) > 0:
+            hasher.update(buf)
+            buf = afile.read(blocksize)
+        return hasher.hexdigest()
 
 
 if __name__ == '__main__':
