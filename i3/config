@@ -38,7 +38,7 @@ bindsym $mod+b exec google-chrome-unstable
 bindsym $mod+m exec thunderbird
 bindsym $mod+p exec notmuch-notify.py
 bindsym $mod+u exec myenv.sh
-bindsym $mod+n exec pidgin
+bindsym $mod+n exec gajim
 bindsym $mod+q exec urxvt -e ranger
 bindsym $mod+i exec urxvt -geometry 20x20 -name i3dialog -e i3dialog.py
 bindsym Ctrl+Mod1+l exec i3lock -c 000000
