@@ -25,6 +25,8 @@ if filereadable($HOME . "/.vim/bundle/Vundle.vim/autoload/vundle.vim")
     Plugin 'altercation/vim-colors-solarized'
     Plugin 'tpope/vim-fugitive'
     Plugin 'airblade/vim-gitgutter'
+    Plugin 'vim-scripts/LargeFile'
+    Plugin 'bling/vim-airline'
     call vundle#end() 
 endif
 
