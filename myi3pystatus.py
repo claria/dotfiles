@@ -32,7 +32,7 @@ status.register("load",
 # This would also display a desktop notification (via dbus) if the percentage
 # goes below 5 percent while discharging. The block will also color RED.
 status.register("battery",
-    format="{status}/{consumption:.2f}W {percentage:.2f}%",
+    format="{status} {percentage:.2f}%",
     alert=False,
     alert_percentage=5,
     status={
@@ -70,16 +70,16 @@ status.register("wireless",
 
 status.register("disk",
     path="/home/",
-    format="⌂: {used}/{total}G",)
+    format="⌂:{used}/{total}G",)
 
 status.register("disk",
     path="/",
-    format="√: {used}/{total}G",)
+    format="√:{used}/{total}G",)
 
 # Shows pulseaudio default sink volume
 #
 # Note: requires libpulseaudio from PyPI
 status.register("pulseaudio",
-        format="♪: {volume}%",)
+        format="♪:{volume}%",)
 
 status.run()
