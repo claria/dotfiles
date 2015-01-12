@@ -14,3 +14,8 @@ if [ -d "$USERPYTHONPATH" ] && [[ ":$PYTHONPATH:" != *":$USERPYTHONPATH:"* ]]; t
 	PYTHONPATH="${PYTHONPATH:+"$PYTHONPATH:"}$USERPYTHONPATH"
 fi
 
+#Gnome Keyring 
+if [ -n "$DESKTOP_SESSION" ];then
+    eval $(gnome-keyring-daemon --start --components=ssh)
+    export SSH_AUTH_SOCK
+fi
