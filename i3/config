@@ -38,9 +38,10 @@ bindsym $mod+b exec google-chrome-unstable
 bindsym $mod+m exec thunderbird
 bindsym $mod+p exec notmuch-notify.py
 bindsym $mod+u exec myenv.sh
-bindsym $mod+n exec gajim
+bindsym $mod+n exec pidgin
 bindsym $mod+q exec urxvt -e ranger
-bindsym $mod+i exec urxvt -geometry 20x20 -name i3dialog -e i3dialog.py
+# bindsym $mod+i exec urxvt -geometry 20x20 -name i3dialog -e i3dialog.py
+bindsym $mod+i exec urxvt -geometry 20x20 -name i3dialog -e /home/aem/Desktop/launcher/i3launcher.py
 bindsym Ctrl+Mod1+l exec i3lock -c 000000
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
