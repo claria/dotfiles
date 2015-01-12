@@ -65,3 +65,13 @@ cd () {
     builtin cd "$@"
   fi
 }
+
+publish() {
+TARGET='sieber@ekplx69:public_html/private/dump/'
+for var in "$@"
+do
+scp "$var" ${TARGET}
+fname=$(basename $var)
+echo "http://www-ekp.physik.uni-karlsruhe.de/~sieber/private/dump/$fname"
+done
+}
