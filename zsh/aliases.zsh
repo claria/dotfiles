@@ -22,3 +22,4 @@ alias cd....='cd ../../..'
 alias cd.....='cd ../../../..'
 alias cd/='cd /'
 
+alias abspath='readlink -e'

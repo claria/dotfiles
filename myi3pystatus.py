@@ -67,13 +67,20 @@ status.register("wireless",
 # Shows disk usage of /
 # Format:
 # 42/128G [86G]
+status.register("dpms")
 
 status.register("disk",
     path="/home/",
+    color='#FFFFFF',
+    critical_color='#FFFFFF',
+    critical_limit=999.,
     format="⌂:{used}/{total}G",)
 
 status.register("disk",
     path="/",
+    color='#FFFFFF',
+    critical_color='#FFFFFF',
+    critical_limit=999.,
     format="√:{used}/{total}G",)
 
 # Shows pulseaudio default sink volume

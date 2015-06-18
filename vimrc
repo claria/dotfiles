@@ -16,9 +16,9 @@ if filereadable($HOME . "/.vim/bundle/Vundle.vim/autoload/vundle.vim")
     " let Vundle manage Vundle
     " required! 
     Plugin 'gmarik/vundle'
-    if v:version > 703 && has('python')
-        Plugin 'Valloric/YouCompleteMe'
-    endif
+    " if v:version > 703 && has('python')
+    "     Plugin 'Valloric/YouCompleteMe'
+    " endif
     Plugin 'tomtom/tcomment_vim'
     Plugin 'scrooloose/nerdtree'
     Plugin 'godlygeek/tabular'
@@ -29,6 +29,7 @@ if filereadable($HOME . "/.vim/bundle/Vundle.vim/autoload/vundle.vim")
     Plugin 'bling/vim-airline'
     Plugin 'kien/ctrlp.vim'
     Plugin 'tpope/vim-surround'
+    Plugin 'tpope/vim-markdown'
     call vundle#end() 
 endif
 
@@ -130,8 +131,9 @@ set showcmd
 " Show Tabs and trailing spaces
 ":set listchars=tab:>-,trail:~,extends:>,precedes:<
 set listchars=trail:·,precedes:«,extends:»,tab:▸-
-:set list
+set list
 map <silent> <leader>s :set nolist!<CR>
+" highlight SpecialKey ctermfg=254
 
 " inkrementelle Suche aktivieren, Groß-/Kleinschreibung bei der Suche
 " ignorieren und Suchergebnisse einfärben
