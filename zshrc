@@ -13,6 +13,9 @@ setopt correctall
 autoload -U colors
 colors
 
+eval $(dircolors ~/.dircolors)
+
+
 #vcs_info
 autoload -Uz vcs_info
 
