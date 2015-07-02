@@ -34,6 +34,9 @@ status.register("load",
 status.register("battery",
     format="{status} {percentage:.2f}%",
     alert=False,
+    color='#ffffff',
+    full_color='#ffffff',
+    charging_color='#ffffff',
     alert_percentage=5,
     status={
         "DIS": "↓",
@@ -58,7 +61,7 @@ status.register("network",
 # like quality and network names.
 #
 # Note: requires both netifaces-py3 and basiciw
-status.register("wireless",
+status.register("network",
     interface="wlan0",
     format_up="{essid}",
     color_down="#FFFFFF",
@@ -73,15 +76,15 @@ status.register("disk",
     path="/home/",
     color='#FFFFFF',
     critical_color='#FFFFFF',
-    critical_limit=999.,
-    format="⌂:{used}/{total}G",)
+    critical_limit=0,
+    format="⌂:{percentage_used}%",)
 
 status.register("disk",
     path="/",
     color='#FFFFFF',
     critical_color='#FFFFFF',
-    critical_limit=999.,
-    format="√:{used}/{total}G",)
+    critical_limit=0,
+    format="√:{percentage_used}%",)
 
 # Shows pulseaudio default sink volume
 #
