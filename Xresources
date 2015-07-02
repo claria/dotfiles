@@ -5,7 +5,7 @@ xterm*locale: true
 xterm*metaSendsEscape: true
 Xterm*saveLines: 4096
 xterm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
-xterm*faceName: DejaVu Sans Mono:size=10
+xterm*faceName: Terminus:size=10
 !xterm*font: 7x13
 ! vim: set filetype=xdefaults :
 !
