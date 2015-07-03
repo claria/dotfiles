@@ -19,6 +19,7 @@ if filereadable($HOME . "/.vim/bundle/Vundle.vim/autoload/vundle.vim")
     " if v:version > 703 && has('python')
     "     Plugin 'Valloric/YouCompleteMe'
     " endif
+    Plugin 'tpope/vim-sleuth'
     Plugin 'tomtom/tcomment_vim'
     Plugin 'scrooloose/nerdtree'
     Plugin 'godlygeek/tabular'
