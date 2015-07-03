@@ -18,7 +18,7 @@ fi
 
 
 # export PS1="\[\033[01;31m\]\h\[\033[01;34m\] \W \$\[\033[00m\] "
-export PS1='\[\e[0;32m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'
+export PS1="\[\e[0;32m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\]\[\e[1;32m\]\$(__git_ps1) \$\[\e[m\] \[\e[1;37m\]"
 #
 # HISTORY
 #
@@ -47,10 +47,8 @@ fi
 
 for dir in $HOME/.bash/* ; do
     if [ -d "$dir" ]; then
-        echo $dir
         if [[ "$HOST" =~ $(basename ${dir}) ]]; then
-            echo "$HOST" and $dir are matching.
-            for f in $HOME/.bash/$dir/*; do
+            for f in $dir/*; do
                 . "$f"
             done
         fi
