@@ -11,15 +11,17 @@ import socket
 import hashlib
 
 # Initialize Logging
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 log = logging.getLogger(__name__)
 
 
 def main():
-    """
-    Simple tool for managing dotfiles.
+    """Tool for managing dotfiles.
+
+
     """
     parser = argparse.ArgumentParser(description='Handle dotfiles.')
+    parser.add_argument("--log-level", default="info",
+                        help="Log level.")
     subparsers = parser.add_subparsers()
 
     glob_parser = argparse.ArgumentParser(add_help=False)
@@ -31,7 +33,7 @@ def main():
     parser_status = subparsers.add_parser('status', help='Show status of all dotfiles',
                                            parents=[glob_parser])
     parser_status.set_defaults(func=print_status)
- 
+
 
     # Install/symlink dotfiles
     parser_install = subparsers.add_parser('install', help='Install or update symlinks.',
@@ -55,8 +57,14 @@ def main():
     parser_remove.add_argument('files', nargs='*', help='Remove files from dotfiles repo.')
 
     log.debug('Parsing Args')
-    clargs = vars(parser.parse_args())
-    clargs['func'](**clargs)
+    args = vars(parser.parse_args())
+    # Setup logger
+    log_level = getattr(logging, args['log_level'].upper(), None)
+    if not isinstance(log_level, int):
+        raise ValueError('Invalid log level: %s' % loglevel)
+    logging.basicConfig(format='%(message)s',
+                        level=log_level)
+    args['func'](**args)
 
 
 def install_symlinks(**kwargs):
@@ -101,7 +109,8 @@ def install_symlinks(**kwargs):
             else:
                 log.debug('Skipping file {0}.'.format(linkname))
                 continue
-
+        # TODO Check if folder, if existing, is a symlink already to .dotfiles.
+        # This would create a loop.
 
         log.debug('Symlinking {0} to {1}'.format(linkname, filepath))
         directory = os.path.dirname(linkname)
@@ -209,7 +218,7 @@ def is_valid_link(dotfile, dotfiles_dir):
     if os.path.islink( homefolder_path):
         if (os.path.realpath(homefolder_path) == dotfile):
             return True
-        else: 
+        else:
             return False
     else:
         return False

@@ -16,9 +16,9 @@ fi
 # PROMPT
 #
 
-export PS1="\[\033[01;31m\]\h\[\033[01;34m\] \W \$\[\033[00m\] "
 
-
+# export PS1="\[\033[01;31m\]\h\[\033[01;34m\] \W \$\[\033[00m\] "
+export PS1='\[\e[0;32m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'
 #
 # HISTORY
 #
@@ -42,14 +42,21 @@ if [ -d $HOME/.zsh ]; then
     unset f
 fi
 
-# Source machine depending settings in $HOME/.zsh/$HOST/
+# Source machine depending settings in $HOME/.bash/ based
+# on regex matching of $HOST with folder name.
 
-if [ -d $HOME/.bash/$HOST ]; then
-    for f in $HOME/.bash/$HOST/*; do
-        . "$f"
-    done
-    unset f
-fi
+for dir in $HOME/.bash/* ; do
+    if [ -d "$dir" ]; then
+        echo $dir
+        if [[ "$HOST" =~ $(basename ${dir}) ]]; then
+            echo "$HOST" and $dir are matching.
+            for f in $HOME/.bash/$dir/*; do
+                . "$f"
+            done
+        fi
+        unset f
+    fi
+done
 
 #
 # VIM
@@ -63,3 +70,4 @@ then
 fi
 export PAGER="less"
 
+cd $HOME
