@@ -23,7 +23,7 @@ if filereadable($HOME . "/.vim/bundle/Vundle.vim/autoload/vundle.vim")
     Plugin 'tomtom/tcomment_vim'
     Plugin 'scrooloose/nerdtree'
     Plugin 'godlygeek/tabular'
-    Plugin 'altercation/vim-colors-solarized'
+    " Plugin 'altercation/vim-colors-solarized'
     Plugin 'tpope/vim-fugitive'
     Plugin 'airblade/vim-gitgutter'
     Plugin 'vim-scripts/LargeFile'
@@ -40,7 +40,7 @@ endif
 " Syntax highlighting aktivieren
 syntax on
 set background=dark
-colorscheme solarized
+" colorscheme solarized
 
 
 " YouCompleteMe Autocompleter
