@@ -13,7 +13,13 @@ log = logging.getLogger(__name__)
 
 
 def main():
-    """Tool for managing dotfiles."""
+    """Simple dotfile manager.
+
+       All dotfiles are kept in a specific directory within a git repository.
+       The dotman script then creates symlink in the home directory pointing to the files in the dotman
+       repository. It also supports host specific dotfiles within the subfolder hosts/HOSTNAME. Dotfiles
+       in this directory prevail dotfiles in the specific directory.
+    """
     parser = argparse.ArgumentParser(description='Handle dotfiles.')
     parser.add_argument("--log-level", default="info",
                         help="Log level.")
@@ -127,12 +133,14 @@ def symlink_files(dotfiles_dir, force_install=False):
 
 
 def uninstall_symlinks():
+    """Remove installed dotfiles."""
     log.info('Uninstalling symlinks')
     log.error('Not implemented.')
     raise NotImplementedError
 
 
 def add_files(**kwargs):
+    """Add files to dotfile repository."""
     files = kwargs['files']
     for filename in files:
         path = os.path.abspath(filename)
