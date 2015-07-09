@@ -23,10 +23,11 @@ export PS1="\[\e[0;32m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\]\[\e[1;32m\]\$(__git
 # HISTORY
 #
 
-HISTFILESIZE=40000
-HISTSIZE=40000
+HISTFILESIZE=100000
+HISTSIZE=10000
 HISTTIMEFORMAT="[%Y-%m-%d %H:%M:%S] "
 HISTCONTROL="ignoreboth"
+shopt -s histappend
 
 # Recursive globbing
 shopt -s globstar
@@ -35,7 +36,7 @@ shopt -s checkwinsize
 
 # Source scripts in $HOME/.bash/
 
-if [ -d $HOME/.zsh ]; then
+if [ -d $HOME/.bash ]; then
     for f in $HOME/.bash/*.sh; do
         . "$f"
     done
