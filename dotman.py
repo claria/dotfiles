@@ -65,33 +65,46 @@ def install_symlinks(**kwargs):
     """ Symlinks all files to home directory
     """
     log.info('Installing symlinks')
-    dotfiles_dir = kwargs['dotfiles_dir']
+    dotfiles_dir = kwargs.pop('dotfiles_dir')
+    force_install = kwargs.pop('force_install')
+    # Sync global dotfiles
+    symlink_files(dotfiles_dir, force_install=force_install)
+    # If host specific dotfiles available sync them too.
+    host_dotfiles_dir = os.path.join(dotfiles_dir, 'hosts', get_hostname())
+    if os.path.isdir(host_dotfiles_dir):
+        symlink_files(host_dotfiles_dir, force_install=force_install)
 
+
+def symlink_files(dotfiles_dir, force_install=False):
     # Only files, no directories, are symlinked. But the directory structure is preserved.
+    log.debug("Symlinking all files in {0}.".format(dotfiles_dir))
     dotfiles = get_all_dotfiles(dotfiles_dir)
-
+    print dotfiles
     # Symlink each file
-    for filepath in dotfiles:
-        linkname = get_homefolder_path(filepath, dotfiles_dir)
-
+    for dotfile in dotfiles:
+        linkname = get_homefolder_path(dotfile, dotfiles_dir)
         # Check if link is a valid link to dotfile
-        if is_valid_link(filepath, dotfiles_dir):
-            log.debug('Already a valid symlink: {0}.'.format(filepath))
+        if has_valid_link(dotfile, dotfiles_dir):
+            log.debug('Already a valid symlink: {0}.'.format(dotfile))
             continue
         # Check and remove broken symlinks
         if os.path.islink(linkname) and not os.path.exists(os.readlink(linkname)):
             log.debug('{0} is an invalid link. Will be removed.'.format(linkname))
             os.unlink(linkname)
+        # If existing link points to another file remove link.
+        if os.path.islink(linkname) and not os.readlink(linkname) == dotfile:
+            log.debug('{0} is pointing to a different file. Removing the symlink.'.format(linkname))
+            os.unlink(linkname)
 
         # Check if real path exists.
         if os.path.exists(linkname) and (not os.path.islink(linkname)):
             # If file hashs are equal, if yes just replace
-            if hash_file(linkname) == hash_file(filepath):
+            if hash_file(linkname) == hash_file(dotfile):
                 log.debug('Home folder file and dotfile are identical')
                 log.debug('Replacing home folder file with symlink to dotfile')
                 print "linkname", linkname
                 os.remove(linkname)
-            elif kwargs['force_install']:
+            elif force_install:
                 log.warning('Overwriting file {0}.'.format(linkname))
                 os.remove(linkname)
             else:
@@ -101,14 +114,14 @@ def install_symlinks(**kwargs):
                 continue
         # TODO Check if folder, if existing, is a symlink already to .dotfiles.
         # This would create a loop.
-        log.debug('All checks are succesful:'.format(linkname, filepath))
+        log.debug('All checks are succesful:'.format(linkname, dotfile))
         directory = os.path.dirname(linkname)
         if not os.path.exists(directory):
             log.debug('Directory structure did not yet exist. Directories are created.')
             os.makedirs(directory)
         if not os.path.exists(linkname):
-            log.debug('Symlinking {0} to {1}'.format(linkname, filepath))
-            os.symlink(filepath, linkname)
+            log.debug('Symlinking {0} to {1}'.format(linkname, dotfile))
+            os.symlink(dotfile, linkname)
         else:
             log.warning('Cannot create symlink. File {0} exists.'.format(linkname))
 
@@ -157,7 +170,7 @@ def print_status(**kwargs):
         print "{}:".format(get_rel_path(dotfile, dotfiles_dir))
         print "  Dotpath:   {}".format(dotfile)
         print "  Homepath:  {}".format(get_homefolder_path(dotfile, dotfiles_dir))
-        print "  Symlinked: {}".format(is_valid_link(dotfile, dotfiles_dir))
+        print "  Symlinked: {}".format(has_valid_link(dotfile, dotfiles_dir))
 
 
 def remove_files(**kwargs):
@@ -183,14 +196,9 @@ def get_all_dotfiles(dotfiles_dir):
        The .git folder and the filename of the script (dotman.py) are ommitted.
     """
     dotfiles = []
-    for root, dirnames, filenames in os.walk(dotfiles_dir):
-        if '.git' in root:
-            continue
-        if 'host_' in os.path.basename(root):
-            if os.path.basename(root) == 'host_' + socket.gethostname():
-                raise NotImplementedError
-            else:
-                continue
+    exclude = {'.git', 'hosts', '.idea'}
+    for root, dirs, filenames in os.walk(dotfiles_dir, topdown=True):
+        dirs[:] = [d for d in dirs if d not in exclude]
         for filename in filenames:
             # Remove dotman from list
             if os.path.basename(__file__) == filename:
@@ -199,7 +207,6 @@ def get_all_dotfiles(dotfiles_dir):
                 continue
             path = os.path.join(root, filename)
             dotfiles.append(path)
-
     return dotfiles
 
 
@@ -216,7 +223,7 @@ def get_rel_path(filepath, dotfiles_dir):
     return relpath
 
 
-def is_valid_link(dotfile, dotfiles_dir):
+def has_valid_link(dotfile, dotfiles_dir):
     """Returns true if homefolder_path is a link and if this link points to the dotfile."""
     homefolder_path = get_homefolder_path(dotfile, dotfiles_dir)
     if os.path.islink(homefolder_path) and os.readlink(homefolder_path) == dotfile:
@@ -244,6 +251,8 @@ def hash_file(fname, blocksize=65536):
             buf = afile.read(blocksize)
         return hasher.hexdigest()
 
+def get_hostname():
+    return socket.gethostname()
 
 if __name__ == '__main__':
     main()
