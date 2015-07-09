@@ -1,6 +1,9 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 
+# If not running interactively, don't do anything!
+[[ $- != *i* ]] && return
+
 HOST=`hostname -s`
 
 
@@ -68,8 +71,7 @@ then
 fi
 export PAGER="less"
 
-eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
-export SSH_AUTH_SOCK
-
+# eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+# export SSH_AUTH_SOCK
 
 cd $HOME
