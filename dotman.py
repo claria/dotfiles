@@ -203,13 +203,15 @@ def get_all_dotfiles(dotfiles_dir):
     return dotfiles
 
 def get_homefolder_path(filepath, dotfiles_dir):
+    """Returns absolute path to link in homefolder for a filepath in the dotfiles_dir."""
     relpath = get_rel_path(filepath, dotfiles_dir)
     linkname = os.path.join(os.getenv('HOME'), '.{0}'.format(relpath))
     return linkname
 
 
-def get_rel_path(filepath, dotfiles_dir):
-    relpath = os.path.relpath(filepath, dotfiles_dir)
+def get_rel_path(filepath, reference_dir):
+    """Returns relative path of filepath to reference_dir."""
+    relpath = os.path.relpath(filepath, reference_dir)
     return relpath
 
 def is_valid_link(dotfile, dotfiles_dir):
