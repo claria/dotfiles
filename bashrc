@@ -1,8 +1,14 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 
+# If not running interactively, don't do anything!
+[[ $- != *i* ]] && return
+
 HOST=`hostname -s`
 
+
+#add $HOME/bin to path
+export PATH=$PATH:$HOME/bin
 
 # enable bash completion in interactive shells
 if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -23,11 +29,10 @@ export PS1="\[\e[0;32m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\]\[\e[1;32m\]\$(__git
 # HISTORY
 #
 
-HISTFILESIZE=100000
-HISTSIZE=10000
+HISTFILESIZE=40000
+HISTSIZE=40000
 HISTTIMEFORMAT="[%Y-%m-%d %H:%M:%S] "
 HISTCONTROL="ignoreboth"
-shopt -s histappend
 
 # Recursive globbing
 shopt -s globstar
@@ -36,7 +41,7 @@ shopt -s checkwinsize
 
 # Source scripts in $HOME/.bash/
 
-if [ -d $HOME/.bash ]; then
+if [ -d $HOME/.zsh ]; then
     for f in $HOME/.bash/*.sh; do
         . "$f"
     done
@@ -72,8 +77,7 @@ then
 fi
 export PAGER="less"
 
-eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
-export SSH_AUTH_SOCK
-
+# eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+# export SSH_AUTH_SOCK
 
 cd $HOME

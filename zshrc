@@ -1,7 +1,5 @@
 #!/bin/zsh
 
-exec bash
-
 PATH=$HOME/bin:$PATH
 
 #completion
