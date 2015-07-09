@@ -28,12 +28,12 @@ the following:
 By default dotman.py ignores the .git, hosts, README.md and dotman.py and creates symbolic 
 links for all other files in the home directory. You can install all symlinks using the command
 
-'dotman.py install'
+`dotman.py install`
 
 If you want to add an existing file in your home directory to your .dotfiles repository use
 the command
 
-'dotman.py add /path/to/.dotfile1 /path/to/.dotfile2'
+`dotman.py add /path/to/.dotfile1 /path/to/.dotfile2`
 
 
 
