@@ -7,6 +7,9 @@
 HOST=`hostname -s`
 
 
+#add $HOME/bin to path
+export PATH=$PATH:$HOME/bin
+
 # enable bash completion in interactive shells
 if [ -f /usr/share/bash-completion/bash_completion ]; then
   . /usr/share/bash-completion/bash_completion
