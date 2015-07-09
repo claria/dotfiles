@@ -60,6 +60,9 @@ done
 #
 # VIM
 #
+if [[ -x $(which gvim) ]]; then
+  alias vim='gvim -v'
+fi
 
 if [[ -x $(which vim) ]]
 then
