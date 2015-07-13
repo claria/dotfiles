@@ -80,10 +80,8 @@ def install_symlinks(**kwargs):
     host_dotfiles_dir = os.path.join(dotfiles_dir, 'hosts', get_hostname())
     d = os.path.join(dotfiles_dir, 'hosts')
     host_dirs = [os.path.join(d,o) for o in os.listdir(d) if os.path.isdir(os.path.join(d,o))]
-    print host_dirs
     for host_dir in host_dirs:
         if re.match(os.path.basename(host_dir), get_hostname()):
-            print "Matching", os.path.basename(host_dir), get_hostname()
             symlink_files(host_dir, force_install=force_install)
 
 
@@ -91,7 +89,6 @@ def symlink_files(dotfiles_dir, force_install=False):
     # Only files, no directories, are symlinked. But the directory structure is preserved.
     log.debug("Symlinking all files in {0}.".format(dotfiles_dir))
     dotfiles = get_all_dotfiles(dotfiles_dir)
-    print dotfiles
     # Symlink each file
     for dotfile in dotfiles:
         linkname = get_homefolder_path(dotfile, dotfiles_dir)
@@ -114,7 +111,6 @@ def symlink_files(dotfiles_dir, force_install=False):
             if hash_file(linkname) == hash_file(dotfile):
                 log.debug('Home folder file and dotfile are identical')
                 log.debug('Replacing home folder file with symlink to dotfile')
-                print "linkname", linkname
                 os.remove(linkname)
             elif force_install:
                 log.warning('Overwriting file {0}.'.format(linkname))
