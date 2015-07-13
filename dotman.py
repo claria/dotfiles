@@ -204,7 +204,7 @@ def get_all_dotfiles(dotfiles_dir):
        The .git folder and the filename of the script (dotman.py) are ommitted.
     """
     dotfiles = []
-    exclude = {'.git', 'hosts', '.idea'}
+    exclude = ['.git', 'hosts', '.idea']
     for root, dirs, filenames in os.walk(dotfiles_dir, topdown=True):
         dirs[:] = [d for d in dirs if d not in exclude]
         for filename in filenames:
