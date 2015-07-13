@@ -1,0 +1,51 @@
+#!/bin/sh
+
+export PATH=$PATH:/home/aem/bin
+# Source scripts in /etc/X11/xinit/xinitrc.d/
+#if [ -d /etc/X11/xinit/xinitrc.d ]; then
+#    for f in /etc/X11/xinit/xinitrc.d/*; do
+#        [ -x "$f" ] && . "$f"
+#    done
+#    unset f
+#fi
+
+# Start GNOME Keyring
+# eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+# You probably need to do this too:
+# export SSH_AUTH_SOCK
+# export GPG_AGENT_INFO
+# export GNOME_KEYRING_CONTROL
+# export GNOME_KEYRING_PID
+# /usr/lib/gnome-settings-daemon/gnome-settings-daemon-localeexec &
+eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+export GPG_AGENT_INFO SSH_AUTH_SOCK
+unset SSH_ASKPASS
+
+#setxkbmap -option caps:none
+# setxkbmap -option ctrl:nocaps
+# xset -b
+xrdb ~/.Xresources
+
+#clipboard synchronization
+#autocutsel -fork &
+#autocutsel -selection PRIMARY -fork &
+# clipit &
+
+#Google Calendar Reminder
+#reminder.sh &
+#Auto Mounting
+udiskie -t &
+#Notification Daemon
+dunst &
+#Gnome authentification daemon
+# /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+#Start pulseaudio. Neccesary?
+# start-pulseaudio-x11
+#Network Manager applet
+nm-applet &
+# nmcli nm wifi on
+#Check if docked
+# /home/aem/bin/myenv.sh &
+# xbacklight -set 50
+# touchpad off
+nitrogen --restore &
