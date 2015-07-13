@@ -7,6 +7,7 @@ import subprocess
 import shutil
 import socket
 import hashlib
+import re
 
 # Initialize Logging
 log = logging.getLogger(__name__)
@@ -77,8 +78,13 @@ def install_symlinks(**kwargs):
     symlink_files(dotfiles_dir, force_install=force_install)
     # If host specific dotfiles available sync them too.
     host_dotfiles_dir = os.path.join(dotfiles_dir, 'hosts', get_hostname())
-    if os.path.isdir(host_dotfiles_dir):
-        symlink_files(host_dotfiles_dir, force_install=force_install)
+    d = os.path.join(dotfiles_dir, 'hosts')
+    host_dirs = [os.path.join(d,o) for o in os.listdir(d) if os.path.isdir(os.path.join(d,o))]
+    print host_dirs
+    for host_dir in host_dirs:
+        if re.match(os.path.basename(host_dir), get_hostname()):
+            print "Matching", os.path.basename(host_dir), get_hostname()
+            symlink_files(host_dir, force_install=force_install)
 
 
 def symlink_files(dotfiles_dir, force_install=False):
