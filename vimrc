@@ -23,6 +23,7 @@ if filereadable($HOME . "/.vim/bundle/Vundle.vim/autoload/vundle.vim")
     Plugin 'tomtom/tcomment_vim'
     Plugin 'scrooloose/nerdtree'
     Plugin 'godlygeek/tabular'
+    Plugin 'Cpp11-Syntax-Support'
     " Plugin 'altercation/vim-colors-solarized'
     Plugin 'tpope/vim-fugitive'
     Plugin 'airblade/vim-gitgutter'
@@ -31,6 +32,7 @@ if filereadable($HOME . "/.vim/bundle/Vundle.vim/autoload/vundle.vim")
     Plugin 'kien/ctrlp.vim'
     Plugin 'tpope/vim-surround'
     Plugin 'tpope/vim-markdown'
+    Plugin 'lervag/vimtex'
     call vundle#end() 
 endif
 
