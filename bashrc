@@ -1,13 +1,12 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-
 
 # If not running interactively, don't do anything!
 [[ $- != *i* ]] && return
 
-HOST=`hostname -s`
+# Short hostname (like hostname -s) without domain extension
+export HOST=${HOSTNAME%%.*}
 
 
-#add $HOME/bin to path
+# add $HOME/bin to path
 export PATH=$PATH:$HOME/bin
 
 # enable bash completion in interactive shells
@@ -19,14 +18,12 @@ fi
 
 
 #
-# PROMPT
+# PS1 PROMPT
 #
-
-
-# export PS1="\[\033[01;31m\]\h\[\033[01;34m\] \W \$\[\033[00m\] "
 export PS1="\[\e[0;32m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\]\[\e[1;32m\]\$(__git_ps1) \$\[\e[m\] \[\e[1;37m\]"
+
 #
-# HISTORY
+# HISTORY Settings
 #
 
 HISTFILESIZE=40000
@@ -36,48 +33,54 @@ HISTCONTROL="ignoreboth"
 
 # Recursive globbing
 shopt -s globstar
+# No cd needed to switch directories
 shopt -s autocd
+# Wrap lines again if window size changes
 shopt -s checkwinsize
 
-# Source scripts in $HOME/.bash/
 
+#
+# USER SETTINGS
+#
+
+# Source scripts in $HOME/.bash/
 if [ -d $HOME/.zsh ]; then
-    for f in $HOME/.bash/*.sh; do
-        . "$f"
-    done
-    unset f
+  for f in $HOME/.bash/*.sh; do
+    . "$f"
+  done
+  unset f
 fi
 
-# Source machine depending settings in $HOME/.bash/ based
-# on regex matching of $HOST with folder name.
+# Source machine depending settings in $HOME/.bash/${HOST} based
+# on bash style regex matching of $HOST with folder names.
+# Be aware that only the short hostname is used, not a domain etc.
 
 for dir in $HOME/.bash/* ; do
-    if [ -d "$dir" ]; then
-        if [[ "$HOST" =~ $(basename ${dir}) ]]; then
-            for f in $dir/*; do
-                . "$f"
-            done
-        fi
-        unset f
+  if [ -d "$dir" ]; then
+    if [[ "$HOST" =~ $(basename ${dir}) ]]; then
+      for f in $dir/*; do
+        . "$f"
+      done
     fi
+    unset f
+  fi
 done
 
 #
 # VIM
 #
+
+# if gvim available use console version of gvim instead
 if [[ -x $(which gvim) ]]; then
   alias vim='gvim -v'
 fi
 
 if [[ -x $(which vim) ]]
 then
-    export EDITOR="vim"
-    export USE_EDITOR=$EDITOR
-    export VISUAL=$EDITOR
+  export EDITOR="vim"
+  export USE_EDITOR=$EDITOR
+  export VISUAL=$EDITOR
 fi
 export PAGER="less"
 
-# eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
-# export SSH_AUTH_SOCK
-
-cd $HOME
+# cd $HOME
