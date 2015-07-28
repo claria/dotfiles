@@ -26,10 +26,12 @@ export PS1="\[\e[0;32m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\]\[\e[1;32m\]\$(__git
 # HISTORY Settings
 #
 
-HISTFILESIZE=40000
+HISTFILESIZE=100000
 HISTSIZE=40000
 HISTTIMEFORMAT="[%Y-%m-%d %H:%M:%S] "
 HISTCONTROL="ignoreboth"
+shopt -s histappend
+export PROMPT_COMMAND='history -a;${PROMPT_COMMAND}'
 
 # Recursive globbing
 shopt -s globstar
