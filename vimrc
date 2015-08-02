@@ -33,11 +33,17 @@ if filereadable($HOME . "/.vim/bundle/Vundle.vim/autoload/vundle.vim")
     Plugin 'tpope/vim-surround'
     Plugin 'tpope/vim-markdown'
     Plugin 'lervag/vimtex'
+    Plugin 'rhysd/vim-clang-format'
     call vundle#end() 
 endif
 
 " autocmd vimenter * if !argc() | NERDTree | endif
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+"
+"
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+
 
 " Syntax highlighting aktivieren
 syntax on
