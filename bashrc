@@ -31,8 +31,8 @@ HISTSIZE=40000
 HISTTIMEFORMAT="[%Y-%m-%d %H:%M:%S] "
 HISTCONTROL="ignoreboth"
 shopt -s histappend
-export PROMPT_COMMAND='history -a;${PROMPT_COMMAND}'
-
+# Possibly slow. Needs to be checked.
+export PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 # Recursive globbing
 shopt -s globstar
 # No cd needed to switch directories
