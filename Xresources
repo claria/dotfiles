@@ -120,10 +120,10 @@ URxvt.keysym.Shift-Control-C: perl:clipboard:copy
 URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 !URxvt.font:              -*-profont-*-*-*-*-16-*-*-*-*-*-iso8859-1
 !URxvt.boldFont:          -*-profont-*-*-*-*-16-*-*-*-*-*-iso8859-1
-URxvt.font:                   xft:Terminus:pixelsize=14
-URxvt.boldFont:               xft:Terminus:pixelsize=14
-URxvt.italicFont:             xft:Terminus:pixelsize=14
-URxvt.bolditalicFont:         xft:Terminus:pixelsize=14
+URxvt.font:                   xft:Terminus:pixelsize=12
+URxvt.boldFont:               xft:Terminus:pixelsize=12
+URxvt.italicFont:             xft:Terminus:pixelsize=12
+URxvt.bolditalicFont:         xft:Terminus:pixelsize=12
 !URxvt.font:      -*-terminus-*-*-*-*-*-*-*-*-*-*-*-*
 !URxvt.boldFont:  -*-terminus-*-*-*-*-*-*-*-*-*-*-*-*
 !URxvt.font:         xft:Terminus:pixelsize=12
