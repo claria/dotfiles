@@ -83,9 +83,10 @@ def install_symlinks(**kwargs):
     host_dirs = [x[0] for x in os.walk(os.path.join(dotfiles_dir, 'hosts'))]
     for host_dir in host_dirs:
         if fnmatch.fnmatch(os.path.basename(host_dir), get_hostname()):
-            dotfiles = get_all_dotfiles(dotfiles_dir)
+            dotfiles = get_all_dotfiles(host_dir)
+            print dotfiles
             for dotfile in dotfiles:
-                symlink_file(dotfile, force_install=force_install, dotfiles_dir=dotfiles_dir)
+                symlink_file(dotfile, force_install=force_install, dotfiles_dir=host_dir)
 
 
 def symlink_file(dotfile, force_install=False, dotfiles_dir=None):
