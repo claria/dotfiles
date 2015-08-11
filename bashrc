@@ -39,7 +39,8 @@ shopt -s globstar
 shopt -s autocd
 # Wrap lines again if window size changes
 shopt -s checkwinsize
-
+# VI mode
+set -o vi
 
 #
 # USER SETTINGS
