@@ -15,12 +15,18 @@ eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh
 export GPG_AGENT_INFO SSH_AUTH_SOCK
 unset SSH_ASKPASS
 
+# Disable Caps lock
 setxkbmap -option ctrl:nocaps
-
-#setxkbmap -option caps:none
-# setxkbmap -option ctrl:nocaps
-# xset -b
+# Disable bell
+xset -b
+# Merge/Read .Xresources
 xrdb ~/.Xresources
-
 #Network Manager applet
 nm-applet &
+# Change delay rate
+xset r rate 300 40
+# Monitor off after 1hr
+xset dpms 3600 3600 3600
+# Lock screen after 5 minutes
+
+# xautolock -time 5 -locker 'i3lock -c 000000' &
