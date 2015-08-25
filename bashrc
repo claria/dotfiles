@@ -2,6 +2,8 @@
 # If not running interactively, don't do anything!
 [[ $- != *i* ]] && return
 
+
+set -o vi
 # Short hostname (like hostname -s) without domain extension
 export HOST=${HOSTNAME%%.*}
 
