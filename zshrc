@@ -1,7 +1,7 @@
 
-
 if [ -f /bin/bash ]; then
     exec /bin/bash
+fi
 
 PATH=$HOME/bin:$PATH
 
