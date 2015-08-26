@@ -1,4 +1,7 @@
-#!/bin/zsh
+
+
+if [ -f /bin/bash ]; then
+    exec /bin/bash
 
 PATH=$HOME/bin:$PATH
 
@@ -21,7 +24,7 @@ autoload -Uz vcs_info
 
 # Source scripts in $HOME/.zsh/
 
-if [ -d $HOME/.zsh ]; then
+if [ -d $HOME/.zsyh ]; then
     for f in $HOME/.zsh/*.zsh; do
         . "$f"
     done
