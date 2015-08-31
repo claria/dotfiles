@@ -117,6 +117,8 @@ set mouse=a
 set backup
 set backupdir=~/.backups
 set backupext=.bak
+" Store swap files in fixed location, not current directory.
+set dir=~/.vimswap//,/var/tmp//,/tmp//,.
 
 " History des Kommandozeilen-Eingaben auf die letzten 1000 beschränken
 set history=1000
