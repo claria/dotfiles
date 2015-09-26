@@ -34,7 +34,7 @@ cd () {
 }
 
 publish() {
-  TARGET='sieber@ekplx35:public_html/private/dump/'
+  TARGET='sieber@ekplx35.physik.uni-karlsruhe.de:public_html/private/dump/'
   for var in "$@"
   do
     scp -r "$var" ${TARGET}
