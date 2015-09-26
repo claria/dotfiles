@@ -34,6 +34,7 @@ if filereadable($HOME . "/.vim/bundle/Vundle.vim/autoload/vundle.vim")
     Plugin 'tpope/vim-markdown'
     Plugin 'lervag/vimtex'
     Plugin 'rhysd/vim-clang-format'
+    Plugin 'gregsexton/MatchTag'
     call vundle#end() 
 endif
 
@@ -219,11 +220,11 @@ set nowrap "Wrap lines
 ":autocmd BufReadPost * :DetectIndent
 " set tw=79
 "set textwidth=80
-if exists('+colorcolumn')
-    set colorcolumn=80,81
-    hi ColorColumn guibg=gray25 ctermbg=8
-endif
-
+" if exists('+colorcolumn')
+"     set colorcolumn=80,81
+"     hi ColorColumn guibg=gray25 ctermbg=8
+" endif
+"
 "Replace selected text with <C-r>
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
