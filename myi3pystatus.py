@@ -52,7 +52,7 @@ status.register("battery",
 #
 # Note: the network module requires PyPI package netifaces-py3
 status.register("network",
-    interface="eth0",
+    interface="enp0s25",
     format_up="{v4cidr}",
     color_down="#FFFFFF",
     color_up="#FFFFFF")
@@ -62,7 +62,7 @@ status.register("network",
 #
 # Note: requires both netifaces-py3 and basiciw
 status.register("network",
-    interface="wlan0",
+    interface="wlp3s0",
     format_up="{essid}",
     color_down="#FFFFFF",
     color_up="#FFFFFF")
