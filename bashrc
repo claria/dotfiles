@@ -34,7 +34,7 @@ HISTTIMEFORMAT="[%Y-%m-%d %H:%M:%S] "
 HISTCONTROL="ignoreboth"
 shopt -s histappend
 # Possibly slow. Needs to be checked.
-export PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+# export PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 # Recursive globbing
 shopt -s globstar
 # No cd needed to switch directories
@@ -77,7 +77,7 @@ done
 
 # if gvim available use console version of gvim instead
 if [[ -x $(which gvim) ]]; then
-  alias vim='gvim -v'
+  alias vim='vim'
 fi
 
 if [[ -x $(which vim) ]]
