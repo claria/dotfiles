@@ -5,110 +5,30 @@ xterm*locale: true
 xterm*metaSendsEscape: true
 Xterm*saveLines: 4096
 xterm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
-xterm*faceName: Terminus:size=10
 !xterm*font: 7x13
 ! vim: set filetype=xdefaults :
 !
-Xft.dpi:                    96
-Xft.antialias:           true
-Xft.hinting:              full
-Xft.hintstyle:           hintslight
-Xft.rgba:                  rgb
-!
-xterm*foreground: rgb:a8/a8/a8
-xterm*background: rgb:00/00/00
-URxvt.intensityStyles: false
-!xterm*color0: rgb:00/00/00
-!xterm*color1: rgb:a8/00/00
-!xterm*color2: rgb:00/a8/00
-!xterm*color3: rgb:a8/54/00
-!xterm*color4: rgb:00/00/a8
-!xterm*color5: rgb:a8/00/a8
-!xterm*color6: rgb:00/a8/a8
-!xterm*color7: rgb:a8/a8/a8
-!xterm*color8: rgb:54/54/54
-!xterm*color9: rgb:fc/54/54
-!xterm*color10: rgb:54/fc/54
-!xterm*color11: rgb:fc/fc/54
-!xterm*color12: rgb:54/54/fc
-!xterm*color13: rgb:fc/54/fc
-!xterm*color14: rgb:54/fc/fc
-!xterm*color15: rgb:fc/fc/fc
-!
-!*foreground: #D7D0C7
-!
-! Common
+urxvt*foreground: white
+urxvt*background: black
 
-#define S_yellow        #b58900
-#define S_orange        #cb4b16
-#define S_red           #dc322f
-#define S_magenta       #d33682
-#define S_violet        #6c71c4
-#define S_blue          #268bd2
-#define S_cyan          #2aa198
-#define S_green         #859900
+*color0:  #2E3436
+*color1:  #a40000
+*color2:  #4E9A06
+*color3:  #C4A000
+*color4:  #3465A4
+*color5:  #75507B
+*color6:  #ce5c00
+*color7:  #babdb9
+*color8:  #555753
+*color9:  #EF2929
+*color10: #8AE234
+*color11: #FCE94F
+*color12: #729FCF
+*color13: #AD7FA8
+*color14: #fcaf3e
+*color15: #EEEEEC
 
-
-! Dark
-
-#define S_base03        #002b36
-#define S_base02        #073642
-#define S_base01        #586e75
-#define S_base00        #657b83
-#define S_base0         #C1CACA
-#define S_base1         #93a1a1
-#define S_base2         #eee8d5
-#define S_base3         #fdf6e3
-
-
-! Light
-
-! #define S_base03        #fdf6e3
-! #define S_base02        #eee8d5
-! #define S_base01        #93a1a1
-! #define S_base00        #839496
-! #define S_base0         #657b83
-! #define S_base1         #586e75
-! #define S_base2         #073642
-! #define S_base3         #002b36
-
-
-! To only apply colors to your terminal, for example, prefix
-! the color assignment statement with its name. Example:
-!
-! URxvt*background:            S_base03
-
-*background:              S_base03
-*foreground:              S_base0
-*fading:                  0
-*fadeColor:               S_base03
-*cursorColor:             S_base1
-*pointerColorBackground:  S_base01
-*pointerColorForeground:  S_base1
-
-*color0:                  S_base02
-*color1:                  S_red
-*color2:                  S_green
-*color3:                  S_yellow
-*color4:                  S_blue
-*color5:                  S_magenta
-*color6:                  S_cyan
-*color7:                  S_base2
-*color9:                  S_orange
-*color8:                  S_base03
-*color10:                 S_base01
-*color11:                 S_base00
-*color12:                 S_base0
-*color13:                 S_violet
-*color14:                 S_base1
-*color15:                 S_base3
-
-URxvt.perl-lib: /usr/lib/urxvt/perl/
-
-URxvt.borderColor:        #151515
-URxvt.colorBD:            #ffffff
-URxvt.cursorColor:        #E68908
-URxvt.cursorColor2:       #404040
+URxvt.perl-lib: /usr/users/sieber/.urxvt-perl/
 
 URxvt.perl-ext-common:  default,tabbedex,clipboard
 
@@ -120,10 +40,18 @@ URxvt.keysym.Shift-Control-C: perl:clipboard:copy
 URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 !URxvt.font:              -*-profont-*-*-*-*-16-*-*-*-*-*-iso8859-1
 !URxvt.boldFont:          -*-profont-*-*-*-*-16-*-*-*-*-*-iso8859-1
-URxvt.font:                   xft:Terminus:pixelsize=12
-URxvt.boldFont:               xft:Terminus:pixelsize=12
-URxvt.italicFont:             xft:Terminus:pixelsize=12
-URxvt.bolditalicFont:         xft:Terminus:pixelsize=12
+URxvt.font:                   xft:Ubuntu Mono:pixelsize=16,style=regular
+URxvt.boldFont:               xft:Ubuntu Mono:pixelsize=16,style=regular
+URxvt.italicFont:             xft:Ubuntu Mono:pixelsize=16,style=regular
+URxvt.bolditalicFont:         xft:Ubuntu Mono:pixelsize=16,style=regular
+
+!-- Xft settings -- !
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hintstyle:  hintfull
+
 !URxvt.font:      -*-terminus-*-*-*-*-*-*-*-*-*-*-*-*
 !URxvt.boldFont:  -*-terminus-*-*-*-*-*-*-*-*-*-*-*-*
 !URxvt.font:         xft:Terminus:pixelsize=12
