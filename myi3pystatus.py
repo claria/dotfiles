@@ -10,13 +10,20 @@ status = Status(standalone=True)
 # Tue 30 Jul 11:59:46 PM KW31
 #                          ^-- calendar week
 status.register("clock",
-    format="%a %-d %b %X KW%V",)
+    format=" %a %-d %b  %X",
+    on_leftclick = 'notify-send -t 5000 "$(gcalcli --nocolor agenda)\\n"'
+    )
 
 # Shows the average load of the last minute and the last 5 minutes
 # (the default value for format is used)
 status.register("load",
         critical_limit=4.,
-        critical_color="#FFFFFF")
+        format=' {avg1} {avg5} {avg15}',
+        critical_color="#ffffff")
+
+status.register("mem",
+        format=' {percent_used_mem}',
+        color='#ffffff')
 
 # Shows your CPU temperature, if you have a Intel CPU
 # status.register("temp",
@@ -32,16 +39,16 @@ status.register("load",
 # This would also display a desktop notification (via dbus) if the percentage
 # goes below 5 percent while discharging. The block will also color RED.
 status.register("battery",
-    format="{status} {percentage:.2f}%",
+    format="{status}{percentage:.2f}%",
     alert=False,
     color='#ffffff',
     full_color='#ffffff',
     charging_color='#ffffff',
     alert_percentage=5,
     status={
-        "DIS": "↓",
-        "CHR": "↑",
-        "FULL": "=",
+        "DIS": " -",
+        "CHR": " +",
+        "FULL": " ",
     },)
 
 # Shows the address and up/down state of eth0. If it is up the address is shown in
@@ -63,33 +70,45 @@ status.register("network",
 # Note: requires both netifaces-py3 and basiciw
 status.register("network",
     interface="wlp3s0",
-    format_up="{essid}",
+    format_up=" {essid}",
     color_down="#FFFFFF",
     color_up="#FFFFFF")
 
 # Shows disk usage of /
 # Format:
 # 42/128G [86G]
-status.register("dpms")
+status.register("dpms",
+    format=' dpms',
+    format_disabled=' d̶p̶m̶s̶')
 
 status.register("disk",
     path="/home/",
     color='#FFFFFF',
     critical_color='#FFFFFF',
     critical_limit=0,
-    format="⌂:{percentage_used}%",)
+    format=" {percentage_used}%",)
 
 status.register("disk",
     path="/",
     color='#FFFFFF',
     critical_color='#FFFFFF',
     critical_limit=0,
-    format="√:{percentage_used}%",)
+    format=" {percentage_used}%",)
 
 # Shows pulseaudio default sink volume
 #
 # Note: requires libpulseaudio from PyPI
 status.register("pulseaudio",
-        format="♪:{volume}%",)
+        format=" {volume}%",)
+
+status.register("timer",
+        on_overflow='notify-send -u critical "Timer due"',
+        format_stopped='',
+        on_leftclick=['start', 60],
+        on_upscroll=['increase', 10],
+        on_downscroll=['increase', -10],
+        color='#ffffff',
+        )
+
 
 status.run()
