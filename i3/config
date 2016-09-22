@@ -187,6 +187,7 @@ bar {
         status_command python ~/.i3pystatus.py
         position top
         workspace_buttons yes
+       font pango:Terminus, FontAwesome 8
 }
 
 #
