@@ -1,0 +1,139 @@
+#ControlPath ~/.ssh/master-%r@%h:%p
+Host *
+#    ControlMaster auto
+#    ControlPath /tmp/%r@%h:%p
+    ForwardX11Trusted yes
+    ForwardX11 yes
+    ServerAliveInterval 10
+    ForwardAgent yes
+
+Host ekpcms?
+    User sieber
+    HostName %h.physik.uni-karlsruhe.de
+    TCPKeepAlive yes
+    ServerAliveInterval 30
+    ForwardAgent yes
+
+Host ekplx*
+    User sieber
+    HostName %h.physik.uni-karlsruhe.de
+    TCPKeepAlive yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 10
+    ForwardAgent yes
+
+Host alarmpi
+    User aem
+    TCPKeepAlive yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 10
+    ForwardAgent yes
+
+Host naf
+    User gsieber
+    HostName nafhh-cms02.desy.de
+    TCPKeepAlive yes
+    ForwardAgent yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 10
+    ForwardAgent yes
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials yes
+
+Host naf2
+    User gsieber
+    HostName nafhh-cms02.desy.de
+    TCPKeepAlive yes
+    ForwardAgent yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 10
+    ForwardAgent yes
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials yes
+
+Host naf4
+    User gsieber
+    HostName nafhh-cms04.desy.de
+    TCPKeepAlive yes
+    ForwardAgent yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 10
+    ForwardAgent yes
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials yes
+
+Host naf5
+    User gsieber
+    HostName nafhh-cms05.desy.de
+    TCPKeepAlive yes
+    ForwardAgent yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 10
+    ForwardAgent yes
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials yes
+
+Host naf6
+    User gsieber
+    HostName nafhh-cms06.desy.de
+    TCPKeepAlive yes
+    ForwardAgent yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 10
+    ForwardAgent yes
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials yes
+
+Host naf3
+    User gsieber
+    HostName nafhh-cms03.desy.de
+    TCPKeepAlive yes
+    ForwardAgent yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 10
+    ForwardAgent yes
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials yes
+
+Host naf1
+    User gsieber
+    HostName nafhh-cms01.desy.de
+    TCPKeepAlive yes
+    ForwardAgent yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 10
+    ForwardAgent yes
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials yes
+
+Host lxplus
+    User sieber
+    HostName lxplus.cern.ch
+    TCPKeepAlive yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 10
+    ForwardAgent yes
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials yes
+    ForwardX11Trusted yes
+    ForwardX11 yes
+    # PreferredAuthentications password,hostbased,publickey
+
+Host svn.cern.ch
+    User sieber
+    Protocol 2
+    ForwardX11 no
+    IdentityFile ~/.ssh/id_rsa
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials yes
+
+Host pool
+    User sieber
+    HostName fphctssh.physik.uni-karlsruhe.de 
+    TCPKeepAlive yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 10
+    ForwardAgent yes
+    ForwardX11Trusted yes
+    ForwardX11 yes
+
