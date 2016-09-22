@@ -22,7 +22,7 @@ status.register("load",
         critical_color="#ffffff")
 
 status.register("mem",
-        format=' {percent_used_mem}',
+        format=' {percent_used_mem}%',
         color='#ffffff')
 
 # Shows your CPU temperature, if you have a Intel CPU
