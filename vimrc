@@ -15,7 +15,7 @@ if filereadable($HOME . "/.vim/bundle/Vundle.vim/autoload/vundle.vim")
 
     " let Vundle manage Vundle
     " required! 
-    Plugin 'gmarik/vundle'
+    Plugin 'VundleVim/Vundle.vim'
     " if v:version > 703 && has('python')
     "     Plugin 'Valloric/YouCompleteMe'
     " endif
@@ -24,22 +24,25 @@ if filereadable($HOME . "/.vim/bundle/Vundle.vim/autoload/vundle.vim")
     Plugin 'scrooloose/nerdtree'
     Plugin 'godlygeek/tabular'
     Plugin 'Cpp11-Syntax-Support'
-    " Plugin 'altercation/vim-colors-solarized'
+    Plugin 'altercation/vim-colors-solarized'
     Plugin 'tpope/vim-fugitive'
     Plugin 'airblade/vim-gitgutter'
     Plugin 'vim-scripts/LargeFile'
     Plugin 'bling/vim-airline'
     Plugin 'kien/ctrlp.vim'
     Plugin 'tpope/vim-surround'
-    Plugin 'tpope/vim-markdown'
     Plugin 'lervag/vimtex'
     Plugin 'rhysd/vim-clang-format'
     Plugin 'gregsexton/MatchTag'
+    Plugin 'plasticboy/vim-markdown'
+    Plugin 'JamshedVesuna/vim-markdown-preview'
     call vundle#end() 
 endif
 
 " autocmd vimenter * if !argc() | NERDTree | endif
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+"
+let vim_markdown_preview_use_xdg_open=1
 "
 "
 autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
@@ -58,20 +61,18 @@ let g:ycm_confirm_extra_conf = 0
 nmap <leader>gh :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " Set extra options when running in GUI mode
-if has("gui_running")
-    set guioptions-=T
-    set guioptions+=e
-    set t_Co=256
-    set guitablabel=%M\ %t
+if has('gui_running')
+    set background=dark
+    colorscheme solarized
 endif
 
-
 " Vim Latex Suite
-let g:Tex_GotoError=0
-let g:Tex_ShowErrorContext=0
-let g:Tex_DefaultTargetFormat='pdf'
-let g:Tex_CompileRule_pdf='pdflatex -interaction=nonstopmode $*'
-let g:tex_flavor='latex'
+" autocmd FileType tex setlocal makeprg=pdflatex\ --shell-escape\ '%'
+" let g:Tex_GotoError=0
+" let g:Tex_ShowErrorContext=0
+" let g:Tex_DefaultTargetFormat='pdf'
+" let g:Tex_CompileRule_pdf='pdflatex -interaction=nonstopmode $*'
+" let g:tex_flavor='latex'
 
 " Use X Clipboard
 set clipboard=unnamed
@@ -110,7 +111,7 @@ set whichwrap+=<,>,h,l,[,]
 
 "Neccessary for Latex suite
 set grepprg=grep\ -nH\ $*
-let g:tex_flavor='latex'
+" let g:tex_flavor='latex'
 
 set mouse=a
 
@@ -142,7 +143,7 @@ set showcmd
 
 " Show Tabs and trailing spaces
 ":set listchars=tab:>-,trail:~,extends:>,precedes:<
-set listchars=trail:·,precedes:«,extends:»,tab:▸-
+set listchars=trail:·,precedes:«,extends:»,eol:↲,tab:▸\ 
 set list
 map <silent> <leader>s :set nolist!<CR>
 " highlight SpecialKey ctermfg=254
