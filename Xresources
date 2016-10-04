@@ -1,51 +1,57 @@
 ! ~/.Xresources
 
-Xft.dpi:                    96
-Xft.antialias:           true
-Xft.hinting:              full
-Xft.hintstyle:           hintslight
-Xft.rgba:                  rgb
-!
-! ------------------------------------------------------------------------------
-! ROFI Color theme
-! ------------------------------------------------------------------------------
-rofi.background: #073642
-rofi.foreground: #eee8d5
-rofi.highlightbg: #b58900
-rofi.highlightfg: #ffffff
-rofi.bordercolor: #678698
-rofi.padding: 1
-rofi.lines: 5
-rofi.borderwidth: 1
-rofi.opacity: 100
-rofi.font: Terminus 9
-rofi.location: 1
-rofi.yoffset: 0
-rofi.xoffset: 0
-rofi.width: 100
-rofi.fixed_num_lines: 1
-rofi.hmode: false
-rofi.terminal: urxvt
-rofi.ssh-set-title: false
+! Xft.dpi:        102
+Xft.antialias:  true
+Xft.hinting:    full
+Xft.hintstyle:  hintslight
+Xft.rgba:       rgb
 
-
+! special
+*.foreground:   #c5c8c6
+*.background:   #1d1f21
+*.cursorColor:  #c5c8c6
+! black
+*.color0:       #282a2e
+*.color8:       #373b41
+! red
+*.color1:       #a54242
+*.color9:       #cc6666
+! green
+*.color2:       #8c9440
+*.color10:      #b5bd68
+! yellow
+*.color3:       #de935f
+*.color11:      #f0c674
+! blue
+*.color4:       #5f819d
+*.color12:      #81a2be
+! magenta
+*.color5:       #85678f
+*.color13:      #b294bb
+! cyan
+*.color6:       #5e8d87
+*.color14:      #8abeb7
+! white
+*.color7:       #707880
+*.color15:      #c5c8c6
+! ------------------------------------------------------------------------------
+! URxvt settings
+! ------------------------------------------------------------------------------
 URxvt.perl-lib: /usr/lib/urxvt/perl/
+URxvt.perl-ext-common:            default,tabbedex,clipboard
+URxvt.keysym.Control-t:           perl:tabbedex:new_tab
+URxvt.keysym.Control-Tab:         perl:tabbedex:next_tab
+URxvt.keysym.Control-Shift-Tab:   perl:tabbedex:prev_tab
+URxvt.keysym.Shift-Control-C:     perl:clipboard:copy
+URxvt.keysym.Shift-Control-V:     perl:clipboard:paste
+
+! Terminus
+URxvt.font:               xft:Terminus-10:hinting=True;antialias:True,xft:WenQuanYi Bitmap Song-10:medium;antialias=False,xft:WenQuanYi Zen Hei-10:medium;antialias=True,xft:HanaMinA-10:medium;antialias:True,xft:HanaMinB-10:medium;antialias:True,xft:HanaMinPlus-10:medium;antialias:True
+URxvt.boldFont:           xft:Terminus-10:bold;hinting=True;antialias:True,xft:WenQuanYi Bitmap Song-10:bold;antialias=False,xft:WenQuanYi Zen Hei-10:bold;antialias=True,xft:HanaMinA-10:bold;antialias:True,xft:HanaMinB-10:bold;antialias:True,xft:HanaMinPlus-10:bold;antialias:True
 URxvt.borderColor:        #151515
 URxvt.colorBD:            #ffffff
 URxvt.cursorColor:        #E68908
 URxvt.cursorColor2:       #404040
-
-URxvt.perl-ext-common:  default,tabbedex,clipboard
-URxvt.keysym.Control-t: perl:tabbedex:new_tab
-URxvt.keysym.Control-Tab: perl:tabbedex:next_tab
-URxvt.keysym.Control-Shift-Tab: perl:tabbedex:prev_tab
-URxvt.keysym.Shift-Control-C: perl:clipboard:copy
-URxvt.keysym.Shift-Control-V: perl:clipboard:paste
-
-URxvt.font:                   xft:Ubuntu Mono:pixelsize=16,style=regular
-URxvt.boldFont:               xft:Ubuntu Mono:pixelsize=16,style=regular
-URxvt.italicFont:             xft:Ubuntu Mono:pixelsize=16,style=regular
-URxvt.bolditalicFont:         xft:Ubuntu Mono:pixelsize=16,style=regular
 URxvt.buffered:             true
 URxvt.cursorBlink:          false
 URxvt.cursorUnderlline:     false
@@ -58,3 +64,24 @@ URxvt.scrollWithBuffer:     true
 URxvt.scrollTtyKeypress:    true
 URxvt.pointerBlank:         true
 URxvt*saveLines:            50000
+! ------------------------------------------------------------------------------
+! ROFI Color theme
+! ------------------------------------------------------------------------------
+rofi.background:        #073642
+rofi.foreground:        #eee8d5
+rofi.highlightbg:       #b58900
+rofi.highlightfg:       #ffffff
+rofi.bordercolor:       #678698
+rofi.padding:           1
+rofi.lines:             5
+rofi.borderwidth:       1
+rofi.opacity:           100
+rofi.font:              Terminus 9
+rofi.location:          1
+rofi.yoffset:           0
+rofi.xoffset:           0
+rofi.width:             100
+rofi.fixed_num_lines:   1
+rofi.hmode:             false
+rofi.terminal:          urxvt
+rofi.ssh-set-title:     false
